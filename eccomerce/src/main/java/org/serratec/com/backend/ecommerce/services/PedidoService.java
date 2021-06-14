@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.serratec.com.backend.ecommerce.configs.MailConfig;
 import org.serratec.com.backend.ecommerce.entities.CarrinhoEntity;
@@ -60,9 +59,18 @@ public class PedidoService {
 		return pedidoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id + " não encontrado."));
 	}
 
-	public List<PedidoDto> getAll() {
-		 return pedidoRepository.findAll().stream().map(pedidoMapper::toDto).collect(Collectors.toList());
+	public List<PedidoDto> getAll() throws EntityNotFoundException {
+		List<PedidoEntity> pedidos = pedidoRepository.findAll();
+		List<PedidoDto> pedidosDto = new ArrayList<>();
 		
+		for (PedidoEntity pedido : pedidos) {
+			PedidoDto pedidoDto = new PedidoDto();
+			pedidoDto = pedidoMapper.toDto(pedido);
+			pedidoDto.setProduto(this.coletarProdutosCarrinho(pedido.getId()));
+			pedidosDto.add(pedidoDto);
+		}
+		
+		return pedidosDto;
 	}
 
 	public PedidoEntity findByNumeroPedido(String numeroPedido) {

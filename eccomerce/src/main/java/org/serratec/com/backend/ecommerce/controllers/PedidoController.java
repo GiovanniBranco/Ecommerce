@@ -31,7 +31,7 @@ public class PedidoController {
 	PedidoService pedidoService;
 
 	@GetMapping
-	public ResponseEntity<List<PedidoDto>> getAll() {
+	public ResponseEntity<List<PedidoDto>> getAll() throws EntityNotFoundException {
 		return new ResponseEntity<List<PedidoDto>>(pedidoService.getAll(), HttpStatus.OK);
 	}
 
