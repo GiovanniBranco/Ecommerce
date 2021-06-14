@@ -1,0 +1,17 @@
+Autentitifcaçao
+
+Swagger
+
+Verificar lógica do update do endereço cliente
+
+PedidoService - metodos semelhantes, ver se vai juntar
+
+
+
+
+
+
+
+
+
+
